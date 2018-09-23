@@ -1,15 +1,15 @@
 const express = require('express');
-const router = express.Router();
 const mongoose = require('mongoose');
+const router = express.Router();
 
 // User Login Route
 router.get('/login', (req, res) => {
-  res.send('login');
+  res.render('users/login');
 });
 
-//User Register Route
+// User Register Route
 router.get('/register', (req, res) => {
-  res.send('register');
+  res.render('users/register');
 });
 
 module.exports = router;
