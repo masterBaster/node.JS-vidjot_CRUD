@@ -8,7 +8,6 @@ const router = express.Router();
 require('../models/User');
 const User = mongoose.model('users');
 
-
 // User Login Route
 router.get('/login', (req, res) => {
   res.render('users/login');
@@ -84,6 +83,13 @@ router.post('/register', (req, res) => {
       };
     });
   }
+})
+
+//User Logout Route
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/login');
 })
 
 module.exports = router;
