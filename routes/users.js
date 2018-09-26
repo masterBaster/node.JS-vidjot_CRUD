@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const passed = require('passport');
+const passport = require('passport');
 const router = express.Router();
 
 //Load user model
@@ -18,6 +18,15 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
   res.render('users/register');
 });
+
+//Login Form POST
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect:'/ideas',
+    failureRedirect:'/users/login',
+    failureFlash: true
+  })(req, res, next);
+})
 
 //Register Form POST validation
 router.post('/register', (req, res) => {
@@ -47,7 +56,7 @@ router.post('/register', (req, res) => {
     User.findOne({email: req.body.email})
       .then(user => {
         if(user){
-          req.flash('error_msg', 'thta email already registered');
+          req.flash('error_msg', 'that email already registered');
           res.redirect('/users/register');
         }else{    
           const newUser = new User({
